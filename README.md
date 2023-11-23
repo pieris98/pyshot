@@ -1,4 +1,4 @@
-# `pyshot`: a Python interface for the SHOT descriptor
+# `pyshot`: a Python interface for the SHOT descriptor ([ORIGINAL REPOSITORY OF pyshot](https://github.com/uhlmanngroup/pyshot):
 
 The original implementation originates from the author of [1], [2], [3].
 
@@ -9,22 +9,30 @@ This project makes use of Cython to bind the implementation to a simple Python
 interface.
 
 ## Installation step
-
- - Clone the repository
- - Install the project using the source
-```bash
-git clone <this repo url>
-cd pyshot
-# Manage your virtual env here.
-# You can use, but don't need a conda env.
-pip install .
-```
-
+Before installing, you need to meet some C/C++ *and* Python dependencies:
 ### ⚠ C and C++ dependencies 
 You need `Eigen3`, `FLANN` and `LZ4` to be able to compile the C++
 implementation. 
 
 Please refer to your distribution's package manager.
+Example for `Debian`-based systems:
+```bash
+sudo apt install libflann-dev libeigen3-dev lz4
+```
+### Python dependencies
+I recommend using a `conda` environment to keep things clean. That being said, depending on versions of `libstdc++` in your `conda` env, you might not get `pyshot` to work *even if you successfully build it*.
+I recommend the following steps (tested on Python version `3.10` & `3.8.8`):
+ 1. check your `libstdcxx-ng` version by `conda list libstdcxx-ng` and if necessary run `conda install -c conda-forge libstdcxx-ng==11.2.0` (tested libstdc++ version to avoid [the _ZSt28__throw_bad_array_new_lengthv error due to conda-system libstdc++ mismatch](https://github.com/stan-dev/pystan/issues/294))
+ 2. within your `conda` environment (if you're using one) run `pip` `install -r requirements.txt` for tested versions of `Cython`, `setuptools`, `numpy` that work for building `pyshot` 
+3. Clone the repository (this is a fork from [this branch of uhlmann group's implementation](https://github.com/uhlmanngroup/pyshot/commit/18ff0f25768cf93c62dba847fa002944518a0f2f) (in case it gets updated, although I doubt it due to the repo's inactivity).
+4. Install the project using the source
+```bash
+git clone <this repo url>
+cd pyshot
+# Manage your virtual env here.
+# You can use (recommended), but don't need a conda env.
+pip install .
+```
 
 ### Usage
 
